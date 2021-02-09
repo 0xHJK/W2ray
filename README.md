@@ -4,11 +4,13 @@
 
 基于Docker、Caddy和V2ray
 
-## 服务器和域名
+## 服务器和域名解析
 
 服务器系统推荐debian或ubuntu
 
 域名解析时选择使用代理，实现CDN访问，推荐使用cloudflare
+
+使用的域名即为后面的HOSTNAME
 
 ## 安装 Docker
 
@@ -30,7 +32,7 @@ $ docker --version
 
 一键安装docker-compose
 ```bash
-$ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -48,8 +50,8 @@ $ git clone https://github.com/0xHJK/W2ray.git
 
 修改`caddy/Caddyfile`：
 - 修改域名
-- 修改邮箱（随便写）
-- 修改密码（随便写）
+- 修改邮箱（随便写，用于证书注册）
+- 修改密码（随便写，用于伪装）
 
 修改`v2ray/config.json`：
 - 修改uuid（使用uuidgen随机生成）
@@ -67,3 +69,17 @@ $ docker-compose up
 ```bash
 $ docker-compose up -d
 ```
+
+访问 https://HOSTNAME 显示It works!则表示部署成功
+
+## 本地配置
+
+以V2rayU为例，默认配置如下
+
+* address、host、tls servername 处填写 HOSTNAME
+* id 处填写 UUID
+* security 选择 aes-128-gcm
+* network 选择 ws
+* path 填写 /ray
+
+⚠️ 如果修改了配置文件，则服务端和客户端保持一致即可
